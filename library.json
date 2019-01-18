@@ -1,0 +1,22 @@
+{
+    "name": "LuckyBird",
+    "version": "0.1.0",
+    "keywords": "",
+    "description": "LuckyBird Libs",
+    "authors":
+    {
+        "name": "XueQin",
+        "email": "qinxue@tispuilder.com",
+        "url": "https://rweather.github.io/arduinolibs/crypto.html"
+    },
+    "export": {
+      "include": "libraries/Crypto"
+    },
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/rweather/arduinolibs.git"
+    },
+    "frameworks": "arduino",
+    "platforms": "*"
+}
