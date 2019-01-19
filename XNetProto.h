@@ -56,6 +56,11 @@ typedef struct {
 } ARDUINO_WHITEBOARD;
 
 typedef struct {
+    uint8_t cmd;        
+    uint8_t body[64];
+} ARDUINO_REQUEST;
+
+typedef struct {
     unsigned char cmd;
     unsigned char length;    
     unsigned char body[256];
