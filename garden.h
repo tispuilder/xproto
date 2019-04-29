@@ -57,6 +57,9 @@
 #define I2C_QUERY_SENSORS 0x1
 #define I2C_QUERY_CONTROLS 0x2
 #define I2C_QUERY_ACTIONS 0x3
+#define I2C_QUERY_UNKNOWN 0x4
+#define I2C_PUSH_SENSORS 0x11
+#define I2C_PUSH_ACTION 0x21
 
 
 typedef struct {
@@ -79,16 +82,16 @@ typedef struct {
 
 typedef struct {
     uint8_t mask; //ABCD-EFGH  PWM0 PWM1 HEAT0 UV PUMP FAN CUST0 CUST1 
-    uint pwm_light0; //Plant light
-    uint pwm_light1; //normal light   
-    uint pwm_heat0;
-    uint pwm_uv;    
+    unsigned int pwm_light0; //Plant light
+    unsigned int pwm_light1; //normal light   
+    unsigned int pwm_heat0;
+    unsigned int pwm_uv;    
 } ARDUINO_CONTROL_TABLE;
 
 typedef struct {
     uint8_t mask;
     float float_value;
-    uint  uint_value;
+    unsigned int  uint_value;
     int   int_value;
 } ARDUINO_ACTION;
 

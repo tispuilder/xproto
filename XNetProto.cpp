@@ -30,7 +30,69 @@
  */
 
 #include "XNetProto.h"
+#include <string.h>
+void wrapDataOutput(DATAOUTPUT_WRAPPER *wrapper, unsigned char *buff, unsigned char size) {
+    wrapper->size = size;
+    wrapper->buff = buff;
+    wrapper->buff[0] = 1;
+}
 
+void wrapDataInput(DATAINPUT_WRAPPER *wrapper, unsigned char *buff, unsigned char size) {
+    wrapper->size = size;
+    wrapper->buff = buff;
+    wrapper->index = 1;    
+}
+
+void writeChar(DATAOUTPUT_WRAPPER *wrapper, char value)
+{
+    memcpy((void *)(wrapper->buff + wrapper->buff[0]), (void *)(&value),sizeof(char));
+    wrapper->buff[0] += sizeof(char);
+}
+
+char readChar(DATAINPUT_WRAPPER *wrapper)
+{
+    char tmpChar = (char) wrapper->buff[wrapper->index];
+    wrapper->index +=1;
+    return tmpChar;
+}
+
+
+void writeFloat(DATAOUTPUT_WRAPPER *wrapper, float value)
+{
+    memcpy((void *)(wrapper->buff + wrapper->buff[0]), (void *)(&value),sizeof(float));
+    wrapper->buff[0] += sizeof(float);
+}
+
+float readFloat(DATAINPUT_WRAPPER *wrapper) {
+    float value = *((float *)(wrapper->buff + wrapper->index));
+    wrapper->index += sizeof(float);
+    return value;
+}
+
+void writeInt(DATAOUTPUT_WRAPPER *wrapper, int value)
+{
+    memcpy((void *)(wrapper->buff + wrapper->buff[0]), (void *)(&value),sizeof(int));
+    wrapper->buff[0] += sizeof(int);
+}
+int readInt(DATAINPUT_WRAPPER *wrapper) {
+    int value = *((int *)(wrapper->buff + wrapper->index));
+    wrapper->index += sizeof(int);
+    return value;
+}
+void writeString(DATAOUTPUT_WRAPPER *wrapper, const char * str)
+{
+    wrapper->buff[wrapper->buff[0]] = strlen(str);
+    wrapper->buff[0]++;
+    memcpy((void *)(wrapper->buff + wrapper->buff[0]), (void *)(str),strlen(str));
+    wrapper->buff[0] += strlen(str);
+}
+int readString(DATAINPUT_WRAPPER *wrapper, char *buff) {
+    size_t len = (size_t) wrapper->buff[wrapper->index];
+    wrapper->index++;
+    memcpy(buff, wrapper->buff + wrapper->index, len);
+    wrapper->index += len;
+    return len;
+}
 
 XNetProto::XNetProto() {
 }

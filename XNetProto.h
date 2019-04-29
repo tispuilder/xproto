@@ -57,7 +57,8 @@ typedef struct {
 
 typedef struct {
     uint8_t cmd;        
-    uint8_t body[64];
+    uint8_t mask;
+    uint8_t status;
 } ARDUINO_REQUEST;
 
 typedef struct {
@@ -65,6 +66,28 @@ typedef struct {
     unsigned char length;    
     unsigned char body[256];
 } ARDUINO_MESSAGE;
+
+typedef struct {
+    unsigned char index;
+    unsigned char * buff;
+    unsigned char size;
+} DATAINPUT_WRAPPER;
+
+typedef struct {
+    unsigned char * buff;
+    unsigned char size;
+} DATAOUTPUT_WRAPPER;
+
+void wrapDataOutput(DATAOUTPUT_WRAPPER *wrapper, unsigned char *buff, unsigned char size);
+void wrapDataInput(DATAINPUT_WRAPPER *wrapper, unsigned char *buff, unsigned char size);
+void writeChar(DATAOUTPUT_WRAPPER *wrapper, char value);
+char readChar(DATAINPUT_WRAPPER *wrapper);
+void writeFloat(DATAOUTPUT_WRAPPER *wrapper, float value);
+float readFloat(DATAINPUT_WRAPPER *wrapper);
+void writeInt(DATAOUTPUT_WRAPPER *wrapper, int value);
+int readInt(DATAINPUT_WRAPPER *wrapper);
+void writeString(DATAOUTPUT_WRAPPER *wrapper, const char * str);
+int readString(DATAINPUT_WRAPPER *wrapper, char *buff);
 
 class XNetProto {
 public:
